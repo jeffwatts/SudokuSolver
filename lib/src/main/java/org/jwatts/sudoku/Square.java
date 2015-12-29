@@ -1,7 +1,5 @@
 package org.jwatts.sudoku;
 
-import org.apache.commons.collections4.CollectionUtils;
-import org.apache.commons.collections4.Predicate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -96,41 +94,9 @@ public class Square {
             return;
         }
         sLogger.debug("Possible values for row {}, col {} is {}", rowIndex, colIndex, possibleValues);
-
-        findValuesForSquareCollection(block);
-        findValuesForSquareCollection(row);
-        findValuesForSquareCollection(col);
     }
 
-    // This method finds so-called Hidden Singles
-    private void findValuesForSquareCollection(Square[] squareCollection) {
-        // We want the values that are not currently set in this block
-        Set<Integer> groupNeededValues = grid.allPossibleValues();
-        NeededValuePredicate neededValuePredicate = new NeededValuePredicate(squareCollection);
-        CollectionUtils.filter(groupNeededValues, neededValuePredicate);
-        outer:
-        for (Integer i : groupNeededValues) {
-            Square candidateSquare = null;
-            for (Square s : squareCollection) {
-                if (!s.hasValue() && s.getPossibleValues().contains(i)) {
-                    if (candidateSquare != null) {
-                        // cannot have more than one candidate square per value, so go to the next int
-                        continue outer;
-                    }
-                    candidateSquare = s;
-                }
-            }
-
-            if (candidateSquare == null) {
-                // Shouldn't happen, something has gone horribly wrong
-                throw new RuntimeException("No possible square found for value " + i);
-            } else {
-                candidateSquare.setValue(i);
-            }
-        }
-    }
-
-    private Set<Integer> getPossibleValues() {
+    public Set<Integer> getPossibleValues() {
         // Early exit if no associated square has changed
         if (!isDirty) {
             return lastComputedPossibleValues;
@@ -153,30 +119,5 @@ public class Square {
         isDirty = false;
         lastComputedPossibleValues = possibleValues;
         return possibleValues;
-    }
-
-    /**
-     * Filters out integers that the row, column, or block already has set, altering the passed in set
-     * of integers to include only values that this collection still needs for completeness.
-     */
-    private static class NeededValuePredicate implements Predicate<Integer> {
-        private Square[] squares;
-
-        /**
-         * @param squares should be a row, column, or block
-         */
-        public NeededValuePredicate(Square[] squares) {
-            this.squares = squares;
-        }
-
-        @Override
-        public boolean evaluate(Integer i) {
-            for (Square s : squares) {
-                if (i == s.getValue()) {
-                    return false;
-                }
-            }
-            return true;
-        }
     }
 }

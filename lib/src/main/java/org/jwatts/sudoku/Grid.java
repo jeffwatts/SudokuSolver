@@ -1,5 +1,7 @@
 package org.jwatts.sudoku;
 
+import org.apache.commons.collections4.CollectionUtils;
+
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
@@ -97,16 +99,11 @@ public class Grid {
         return squares;
     }
 
-    /**
-     * Does one iteration over the grid, filling in any values that are implied by the game constraints
-     * @return the number of squares currently filled in on the grid
-     */
-    private int fillInValues() {
+    private int getFilledInSquareCount() {
         int filledInSquareCount = 0;
         for (int row = 0; row < rowColLength; row++) {
             for (int col = 0; col < rowColLength; col++) {
                 Square currentSquare = squares[row][col];
-                currentSquare.attemptFindValue();
                 if (currentSquare.hasValue()) {
                     filledInSquareCount++;
                 }
@@ -120,11 +117,12 @@ public class Grid {
      */
     public boolean solve() {
         int totalGridSize = rowColLength * rowColLength;
-        int filledCount = fillInValues();
+        int filledCount = getFilledInSquareCount();
 
         while (filledCount < totalGridSize) {
             int prevFilledCount = filledCount;
-            filledCount = fillInValues();
+            fillInValues();
+            filledCount = getFilledInSquareCount();
 
             if (prevFilledCount == filledCount) {
                 return false;
@@ -132,6 +130,68 @@ public class Grid {
         }
 
         return true;
+    }
+
+    private void fillInValues() {
+        findValuesForGroup(blocks);
+        findValuesForGroup(squares);
+        findValuesForGroup(columns);
+        fillInNakedSingles();
+    }
+
+    /**
+     * Fills in values that are directly implied by the values of their associated squares.
+     * This is the so-called Naked Single technique.
+     */
+    private void fillInNakedSingles() {
+        for (int row = 0; row < rowColLength; row++) {
+            for (int col = 0; col < rowColLength; col++) {
+                Square currentSquare = squares[row][col];
+                if (!currentSquare.hasValue()) {
+                    Set<Integer> possibleValues = currentSquare.getPossibleValues();
+                    if (possibleValues.size() == 1) {
+                        currentSquare.setValue(possibleValues.iterator().next());
+                    }
+                }
+            }
+        }
+    }
+
+    private void findValuesForGroup(Square[][] squareGroup) {
+        for (Square[] s : squareGroup) {
+            findValuesForSquareCollection(s);
+        }
+    }
+
+    /**
+     * This method finds so-called Hidden Singles, where values are deduced from the needs of a row,
+     * column, or block based on the possible values that all squares in that collection can take.
+     */
+    private void findValuesForSquareCollection(Square[] squareCollection) {
+        // We want the values that are not currently set in this block
+        Set<Integer> groupNeededValues = allPossibleValues();
+        NeededValuePredicate neededValuePredicate = new NeededValuePredicate(squareCollection);
+        CollectionUtils.filter(groupNeededValues, neededValuePredicate);
+        outer:
+        for (Integer i : groupNeededValues) {
+            Square candidateSquare = null;
+            for (Square s : squareCollection) {
+                if (!s.hasValue() && s.getPossibleValues().contains(i)) {
+                    if (candidateSquare != null) {
+                        // cannot have more than one candidate square per value, so go to the next int
+                        continue outer;
+                    }
+                    candidateSquare = s;
+                }
+            }
+
+            if (candidateSquare == null) {
+                // Shouldn't happen, something has gone horribly wrong
+                throw new RuntimeException("No possible square found for value " + i);
+            } else {
+                candidateSquare.setValue(i);
+            }
+        }
     }
 
     public Square[] getRow(int rowIndex) {
