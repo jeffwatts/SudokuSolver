@@ -2,12 +2,16 @@ package org.jwatts.sudoku;
 
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.collections4.Predicate;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
 public class Square {
+    private static final Logger sLogger = LoggerFactory.getLogger(Square.class);
+
     private final int rowIndex;
     private final int colIndex;
     private final Grid grid;
@@ -66,18 +70,17 @@ public class Square {
     }
 
     public void setValue(int value) {
-        System.out.println(String.format("row %d, col %d; setting value %d", rowIndex, colIndex, value));
+        sLogger.debug("row {}, col {}; setting value {}", rowIndex, colIndex, value);
         this.value = value;
-
-        // null out lastComputedPossibleValues as cleanup
-        lastComputedPossibleValues = null;
-        // TODO also null out row, col, block, and allAssociatedSquares?
 
         for (Square s : allAssociatedSquares) {
             if (!s.hasValue()) {
                 s.setDirty();
             }
         }
+
+        // null out lastComputedPossibleValues as cleanup
+        lastComputedPossibleValues = null;
     }
 
     public void attemptFindValue() {
@@ -92,28 +95,27 @@ public class Square {
             setValue(possibleValues.iterator().next());
             return;
         }
-        System.out.println(String.format("Possible values for row %d, col %d is %s", rowIndex, colIndex, possibleValues));
+        sLogger.debug("Possible values for row {}, col {} is {}", rowIndex, colIndex, possibleValues);
 
         findValuesForSquareCollection(block);
         findValuesForSquareCollection(row);
         findValuesForSquareCollection(col);
     }
 
-    // TODO we should be doing this for the whole block, not for a single square. That's what we're doing here,
-    // but the method call makes it look like this is in the search for a single square.
     // This method finds so-called Hidden Singles
     private void findValuesForSquareCollection(Square[] squareCollection) {
         // We want the values that are not currently set in this block
-        Set<Integer> blockNeededValues = grid.allPossibleValues();
+        Set<Integer> groupNeededValues = grid.allPossibleValues();
         NeededValuePredicate neededValuePredicate = new NeededValuePredicate(squareCollection);
-        CollectionUtils.filter(blockNeededValues, neededValuePredicate);
+        CollectionUtils.filter(groupNeededValues, neededValuePredicate);
         outer:
-        for (Integer i : blockNeededValues) {
+        for (Integer i : groupNeededValues) {
             Square candidateSquare = null;
             for (Square s : squareCollection) {
                 if (!s.hasValue() && s.getPossibleValues().contains(i)) {
                     if (candidateSquare != null) {
-                        continue outer; // cannot have more than one candidate square per value, so go to the next int
+                        // cannot have more than one candidate square per value, so go to the next int
+                        continue outer;
                     }
                     candidateSquare = s;
                 }
@@ -138,32 +140,14 @@ public class Square {
         // When only one value remains, then we know that that is the correct value for this square.
         // An int[] or boolean[] array might be most efficient, but starting with Set<Integer> for convenience now.
         Set<Integer> possibleValues = grid.allPossibleValues();
-        System.out.println("Getting possible values for square at row " + rowIndex + ", col " + colIndex);
+        sLogger.debug("Getting possible values for square at row " + rowIndex + ", col " + colIndex);
 
-        for (Square s : row) {
+        // This replaces the above computing of possible values by row, col, and block with allAssociatedSquares
+        for (Square s : allAssociatedSquares) {
             possibleValues.remove(s.getValue());
         }
-        System.out.println("Removed row " + rowIndex + ". Possible values are " + possibleValues);
-        if (possibleValues.size() == 1) {
-            isDirty = false;
-            return possibleValues;
-        }
-
-        for (Square s : col) {
-            possibleValues.remove(s.getValue());
-        }
-        System.out.println("Removed col " + colIndex + ". Possible values are " + possibleValues);
-        if (possibleValues.size() == 1) {
-            isDirty = false;
-            return possibleValues;
-        }
-
-        for (Square s : block) {
-            possibleValues.remove(s.getValue());
-        }
-        System.out.println("Removed block for row " + rowIndex + ", col " + colIndex + ". Possible values are " + possibleValues);
-
-        // TODO replace the above with allAssociatedSquares after we've debugged everything
+        sLogger.debug("Removed values from all associated squares for row {}, col {}. Possible values are {}",
+                rowIndex, colIndex, possibleValues);
 
         // Technically setting these two should be in a synchronized block
         isDirty = false;
@@ -195,22 +179,4 @@ public class Square {
             return true;
         }
     }
-
-//    private static int computeBlockNum(Square square) {
-//        // e.g., for block size = 3
-//        // rows 0-2, col 0-2 get mapped to block 0
-//        // rows 0-2, col 3-5 get mapped to block 1
-//        // rows 0-2, col 6-8 get mapped to block 2
-//        // rows 3-5, col 0-2 get mapped to block 3
-//        // etc
-//        // put differently,
-//        // rows 0-2 get mapped to blocks 0-2
-//        // rows 3-5 get mapped to blocks 3-5
-//        // rows 6-8 get mapped to blocks 6-8
-//
-//        // blocks per block row = blockSize
-//        int blockNum = square.blockRow * square.getGridBlockSize();
-//        blockNum = blockNum + square.blockCol;
-//        return blockNum;
-//    }
 }

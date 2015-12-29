@@ -1,11 +1,13 @@
 package org.jwatts.sudoku;
 
-import org.junit.Ignore;
 import org.junit.Test;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 public class GridTest {
     @Test
-    public void testSolve_easyPuzzleFromUnitedInFlightMagazine() throws NotSolvableByConstraintsException {
+    public void testSolve_easyPuzzleFromUnitedInFlightMagazine() {
         Grid underTest = new Grid();
         Square[][] squares = underTest.getSquares();
         /*
@@ -67,19 +69,15 @@ public class GridTest {
 
         System.out.println("Done initializing");
 
-        underTest.solve();
         // for now just test that this method does not throw
+        assertTrue("Expected puzzle to be solved, instead filled in as \n" + underTest,
+                underTest.solve());
 
-//        int[][] expectedResult
-//
-//        int[][] result = underTest.toIntArray();
-//
-//        assertArrayEquals();
+        printPuzzle(underTest);
     }
 
-    @Ignore
     @Test
-    public void testSolve_randomEasyInternetPuzzle() throws Exception {
+    public void testSolve_randomEasyInternetPuzzle() {
         int[][] initialPuzzleRows = new int[][] {
                 new int[] { 0, 0, 6, 0, 0, 7, 3, 0, 0 },
                 new int[] { 0, 1, 8, 0, 0, 9, 0, 5, 0 },
@@ -93,7 +91,34 @@ public class GridTest {
         };
         Grid underTest = Grid.fromIntArrays(initialPuzzleRows);
         System.out.println("Done initializing");
-        underTest.solve();
-        System.out.println("Final solved puzzle: \n" + underTest.toString());
+        assertTrue(underTest.solve());
+        printPuzzle(underTest);
+    }
+
+    private void printPuzzle(Grid grid) {
+        System.out.println("Final solved puzzle: \n" + grid.toString());
+    }
+
+    @Test
+    public void testComputeBlockNumber() {
+        Grid underTest = new Grid();
+
+        assertEquals(0, underTest.computeBlockNumber(0, 0));
+        assertEquals(0, underTest.computeBlockNumber(0, 2));
+        assertEquals(0, underTest.computeBlockNumber(1, 1));
+        assertEquals(0, underTest.computeBlockNumber(2, 0));
+        assertEquals(0, underTest.computeBlockNumber(2, 2));
+
+        assertEquals(4, underTest.computeBlockNumber(3, 3));
+        assertEquals(4, underTest.computeBlockNumber(3, 5));
+        assertEquals(4, underTest.computeBlockNumber(4, 4));
+        assertEquals(4, underTest.computeBlockNumber(5, 3));
+        assertEquals(4, underTest.computeBlockNumber(5, 5));
+
+        assertEquals(8, underTest.computeBlockNumber(6, 6));
+        assertEquals(8, underTest.computeBlockNumber(6, 8));
+        assertEquals(8, underTest.computeBlockNumber(7, 6));
+        assertEquals(8, underTest.computeBlockNumber(8, 6));
+        assertEquals(8, underTest.computeBlockNumber(8, 8));
     }
 }
