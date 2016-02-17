@@ -67,11 +67,103 @@ public class GridTest {
         squares[8][2].setValue(8);
         squares[8][8].setValue(2);
 
-        System.out.println("Done initializing");
+        // for now just test that this method does not throw
+        boolean solved = underTest.solve();
+        assertTrue("Expected puzzle to be solved, instead filled in as \n" + underTest,
+                solved);
+
+        printPuzzle(underTest);
+    }
+
+    @Test
+    public void testSolve_mediumPuzzleFromFebruaryUnitedInFlightMagazine() {
+        Grid underTest = new Grid();
+        Square[][] squares = underTest.getSquares();
+        /*
+          Starting grid:
+          _____________________
+          | |1| || | | ||4| | |
+          | |8| || | |9|| | | |
+          |4| |5||1|6|8|| | | |
+          ---------------------
+          |5| | || | | || | | |
+          |2|9| || | | || | |6|
+          | | |7|| | |2|| | |9|
+          ---------------------
+          | | |8|| |1| || | |5|
+          |7| | || |5| || |2| |
+          | | |6|| |9| || | |7|
+          ---------------------
+         */
+        // row 0:
+        squares[0][1].setValue(1);
+        squares[0][6].setValue(4);
+
+        // row 1
+        squares[1][1].setValue(8);
+        squares[1][5].setValue(9);
+
+        // row 2
+        squares[2][0].setValue(4);
+        squares[2][2].setValue(5);
+        squares[2][3].setValue(1);
+        squares[2][4].setValue(6);
+        squares[2][5].setValue(8);
+
+        // row 3
+        squares[3][0].setValue(5);
+
+        // row 4
+        squares[4][0].setValue(2);
+        squares[4][1].setValue(9);
+        squares[4][8].setValue(6);
+
+        // row 5
+        squares[5][2].setValue(7);
+        squares[5][5].setValue(2);
+        squares[5][8].setValue(9);
+
+        // row 6
+        squares[6][2].setValue(8);
+        squares[6][4].setValue(1);
+        squares[6][8].setValue(5);
+
+        // row 7
+        squares[7][0].setValue(7);
+        squares[7][4].setValue(5);
+        squares[7][7].setValue(2);
+
+        // row 8
+        squares[8][2].setValue(6);
+        squares[8][4].setValue(9);
+        squares[8][8].setValue(7);
 
         // for now just test that this method does not throw
+        boolean solved = underTest.solve();
         assertTrue("Expected puzzle to be solved, instead filled in as \n" + underTest,
-                underTest.solve());
+                solved);
+
+        printPuzzle(underTest);
+    }
+
+    @Test
+    public void testSolve_mediumPuzzleTwoFromFebruaryUnitedInFlightMagazine() {
+        int[][] initialPuzzleRows = new int[][] {
+                new int[] { 0, 7, 6, 4, 9, 0, 0, 0, 0 },
+                new int[] { 0, 0, 0, 0, 0, 2, 8, 0, 0 },
+                new int[] { 0, 2, 0, 3, 0, 0, 0, 0, 0 },
+                new int[] { 0, 6, 1, 0, 0, 0, 0, 0, 0 },
+                new int[] { 5, 0, 0, 7, 0, 8, 3, 1, 0 },
+                new int[] { 0, 0, 0, 6, 0, 0, 0, 2, 0 },
+                new int[] { 0, 0, 3, 0, 0, 0, 0, 0, 0 },
+                new int[] { 0, 0, 0, 0, 0, 0, 5, 0, 2 },
+                new int[] { 9, 4, 2, 0, 7, 0, 0, 0, 0 },
+        };
+
+        Grid underTest = Grid.fromIntArrays(initialPuzzleRows);
+        boolean solved = underTest.solve();
+        assertTrue("Expected puzzle to be solved, instead filled in as \n" + underTest,
+                solved);
 
         printPuzzle(underTest);
     }
@@ -90,7 +182,6 @@ public class GridTest {
                 new int[] { 0, 0, 2, 4, 0, 0, 6, 0, 0 },
         };
         Grid underTest = Grid.fromIntArrays(initialPuzzleRows);
-        System.out.println("Done initializing");
         assertTrue(underTest.solve());
         printPuzzle(underTest);
     }

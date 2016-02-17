@@ -188,9 +188,9 @@ public class Grid {
             if (candidateSquare == null) {
                 // Shouldn't happen, something has gone horribly wrong
                 throw new RuntimeException("No possible square found for value " + i);
-            } else {
-                candidateSquare.setValue(i);
             }
+
+            candidateSquare.setValue(i);
         }
     }
 
