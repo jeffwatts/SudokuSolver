@@ -1,12 +1,16 @@
 package org.jwatts.sudoku;
 
 import org.apache.commons.collections4.CollectionUtils;
+import org.jwatts.sudoku.events.ValueSetObserver;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
 public class Grid {
+    private static final Logger sLogger = LoggerFactory.getLogger(Grid.class);
     private static final int DEFAULT_BLOCK_SIZE = 3;
 
     // Each block is blockSize * blockSize, whole grid is blockSize^2 * blockSize^2
@@ -25,13 +29,25 @@ public class Grid {
     // All values (e.g., 1-9) that a square in this grid can take
     private final Set<Integer> allPossibleValues;
 
-    public Grid(int blockSize) {
+    private final ValueSetObserver valueSetObserver;
+
+    Grid(int blockSize) {
         this.blockSize = blockSize;
         rowColLength = blockSize * blockSize;
         squares = new Square[rowColLength][rowColLength];
         columns = new Square[rowColLength][rowColLength];
         blocks = new Square[rowColLength][rowColLength];
         allPossibleValues = Collections.unmodifiableSet(initAllPossibleValues());
+
+        // TODO pass in a real observer; default to one that does nothing
+        valueSetObserver = new ValueSetObserver() {
+            @Override
+            public void notifyValueSet(Square s) {
+                sLogger.debug("Value {} set at row {}, col {}",
+                        s.getValue(), s.getRowIndex(), s.getColIndex());
+            }
+        };
+
         initialize();
     }
 
@@ -79,7 +95,7 @@ public class Grid {
     private void initialize() {
         for (int row = 0; row < rowColLength; row++) {
             for (int col = 0; col < rowColLength; col++) {
-                squares[row][col] = new Square(row, col, this);
+                squares[row][col] = new Square(row, col, this, valueSetObserver);
             }
         }
 
