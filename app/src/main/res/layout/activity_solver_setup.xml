@@ -17,7 +17,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceSmall"
-        android:text="Enter an initial puzzle below to get started"
+        android:text="@string/intro_howto"
         android:id="@+id/instruction_text"/>
 
     <GridLayout
@@ -329,7 +329,7 @@
                   android:layout_columnWeight="1"
                   android:layout_gravity="fill"
                   android:layout_width="0dp"
-                  android:autoText="false"/>
+            />
         <EditText
                   android:gravity="center"
                   android:background="@drawable/border_background_top_left"
@@ -768,7 +768,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="left"
-        android:text="Solve!"
+        android:text="@string/solve_button"
         android:id="@+id/solve_button"
         android:onClick="solvePuzzle"
         />

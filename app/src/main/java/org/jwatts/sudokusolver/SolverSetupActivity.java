@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.InputFilter;
+import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.Menu;
@@ -61,11 +62,14 @@ public class SolverSetupActivity extends Activity {
 
                     @Override
                     public void onTextChanged(CharSequence s, int start, int before, int count) {
-                        int squareValue = Integer.parseInt(s.toString());
                         int rowIndex = getRowIndexFromSquareIndex(squareIndex);
                         int colIndex = getColIndexFromSquareIndex(squareIndex);
                         Square[][] squares = sudokuGrid.getSquares();
                         Square square = squares[rowIndex][colIndex];
+                        int squareValue = 0;
+                        if (!TextUtils.isEmpty(s)) {
+                            squareValue = Integer.parseInt(s.toString());
+                        }
                         square.setValue(squareValue);
                         solveButton.setEnabled(true);
                     }
@@ -82,7 +86,6 @@ public class SolverSetupActivity extends Activity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // TODO make this useful
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_solver_setup, menu);
         return true;
@@ -105,24 +108,29 @@ public class SolverSetupActivity extends Activity {
     }
 
     public void solvePuzzle(View solveButtonView) {
-//        Toast.makeText(this, "Solving this puzzle now!", Toast.LENGTH_SHORT).show();
-        Scheduler subsciptionScheduler = Schedulers.newThread();
+        Scheduler subscriptionScheduler = Schedulers.newThread();
 
-        // Using a lambda inside create() confuses Android Studio -- it loses generic type of Square
-        // -- so I'm using the anonymous inner class.
+        // Using a lambda inside create() confuses Android Studiohere  -- it loses the generic type
+        // of Square -- so I'm using the anonymous inner class.
         Observable.create(new Observable.OnSubscribe<Square>() {
             @Override
             public void call(Subscriber<? super Square> subscriber) {
                 ValueSetObserver valueSetObserver = subscriber::onNext;
                 sudokuGrid.addValueSetObserver(valueSetObserver);
             }
-        }).subscribeOn(subsciptionScheduler)
+        }).subscribeOn(subscriptionScheduler)
                 .onBackpressureBuffer()
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(this::onSquareValueSet);
+                .subscribe(
+                        this::onSquareValueSet,
+                        (e) -> {
+                            Toast.makeText(this, "Oops! Encountered an error",
+                                    Toast.LENGTH_SHORT).show();
+                            Log.e(TAG, "Error in observing square value changes", e);
+                        });
 
         Observable<Boolean> solvingObservable = SudokuSolverObservableFactory.createSolverObservable(sudokuGrid);
-        solvingObservable.subscribeOn(subsciptionScheduler)
+        solvingObservable.subscribeOn(subscriptionScheduler)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(solved -> {
                     if (!solved) {
@@ -175,6 +183,6 @@ public class SolverSetupActivity extends Activity {
         if (watcher != null) {
             squareEditText.removeTextChangedListener(watcher);
         }
-        squareEditText.setText("" + square.getValue());
+        squareEditText.setText(String.format("%d", square.getValue()));
     }
 }
