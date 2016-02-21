@@ -29,7 +29,7 @@ public class Grid {
     // All values (e.g., 1-9) that a square in this grid can take
     private final Set<Integer> allPossibleValues;
 
-    private final ValueSetObserver valueSetObserver;
+    private final Set<ValueSetObserver> valueSetObservers;
 
     Grid(int blockSize) {
         this.blockSize = blockSize;
@@ -38,21 +38,13 @@ public class Grid {
         columns = new Square[rowColLength][rowColLength];
         blocks = new Square[rowColLength][rowColLength];
         allPossibleValues = Collections.unmodifiableSet(initAllPossibleValues());
-
-        // TODO pass in a real observer; default to one that does nothing
-        valueSetObserver = new ValueSetObserver() {
-            @Override
-            public void notifyValueSet(Square s) {
-                sLogger.debug("Value {} set at row {}, col {}",
-                        s.getValue(), s.getRowIndex(), s.getColIndex());
-            }
-        };
-
+        valueSetObservers = new HashSet<>();
         initialize();
     }
 
     /**
-     * Defaults to a block size of 3
+     * Defaults to a block size of 3, uses a {@link ValueSetObserver} that just logs the value and
+     * square coordinates at debug level
      */
     public Grid() {
         this(DEFAULT_BLOCK_SIZE);
@@ -95,7 +87,7 @@ public class Grid {
     private void initialize() {
         for (int row = 0; row < rowColLength; row++) {
             for (int col = 0; col < rowColLength; col++) {
-                squares[row][col] = new Square(row, col, this, valueSetObserver);
+                squares[row][col] = new Square(row, col, this);
             }
         }
 
@@ -291,6 +283,16 @@ public class Grid {
 
     public Set<Integer> allPossibleValues() {
         return new HashSet<>(allPossibleValues);
+    }
+
+    void notifyObservers(Square square) {
+        for (ValueSetObserver o : valueSetObservers) {
+            o.notifyValueSet(square);
+        }
+    }
+
+    public void addValueSetObserver(ValueSetObserver valueSetObserver) {
+        valueSetObservers.add(valueSetObserver);
     }
 
     @Override

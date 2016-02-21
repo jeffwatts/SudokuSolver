@@ -1,29 +1,39 @@
 buildscript {
-    dependencies {
-        classpath 'com.android.tools.build:gradle:1.5.0'
-    }
+  dependencies {
+    classpath 'com.android.tools.build:gradle:1.5.0'
+    classpath 'me.tatarka:gradle-retrolambda:3.2.5'
+  }
 }
 
 apply plugin: 'com.android.application'
+apply plugin: 'me.tatarka.retrolambda'
 
 android {
-    compileSdkVersion 22
-    buildToolsVersion '22.0.1'
+  compileSdkVersion 22
+  buildToolsVersion '22.0.1'
 
-    defaultConfig {
-        applicationId 'org.jwatts.sudokusolver'
-        minSdkVersion 21
-        targetSdkVersion 22
-        versionCode 1
-        versionName '1.0'
+  compileOptions {
+    sourceCompatibility JavaVersion.VERSION_1_8
+    targetCompatibility JavaVersion.VERSION_1_8
+  }
+
+  defaultConfig {
+    applicationId 'org.jwatts.sudokusolver'
+    minSdkVersion 21
+    targetSdkVersion 22
+    versionCode 1
+    versionName '1.0'
+  }
+  buildTypes {
+    release {
+      minifyEnabled false
+      proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
     }
-    buildTypes {
-        release {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-        }
-    }
+  }
 }
 
 dependencies {
+  compile project(':lib')
+  compile 'io.reactivex:rxandroid:1.1.0'
+  compile 'io.reactivex:rxjava:1.1.1'
 }

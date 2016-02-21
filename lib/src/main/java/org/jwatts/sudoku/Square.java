@@ -1,6 +1,5 @@
 package org.jwatts.sudoku;
 
-import org.jwatts.sudoku.events.ValueSetObserver;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -14,7 +13,6 @@ public class Square {
     private final int rowIndex;
     private final int colIndex;
     private final Grid grid;
-    private final ValueSetObserver valueSetObserver;
     private volatile int value;
 
     // true when the possible values from this square need recomputation because a square from its row, col, or block had a value set
@@ -36,11 +34,10 @@ public class Square {
     // Not final so we can null out the reference when the value is set
     private final Set<Square> allAssociatedSquares = new HashSet<>();
 
-    public Square(int rowIndex, int colIndex, Grid grid, ValueSetObserver observer) {
+    public Square(int rowIndex, int colIndex, Grid grid) {
         this.rowIndex = rowIndex;
         this.colIndex = colIndex;
         this.grid = grid;
-        this.valueSetObserver = observer;
     }
 
     // Must be called after the whole grid is populated
@@ -80,7 +77,7 @@ public class Square {
             }
         }
 
-        valueSetObserver.notifyValueSet(this);
+        grid.notifyObservers(this);
 
         // null out lastComputedPossibleValues as cleanup
         lastComputedPossibleValues = null;

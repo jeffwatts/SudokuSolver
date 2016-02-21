@@ -31,493 +31,736 @@
         android:id="@+id/sudoku_grid"
         >
 
-        <TextView
+        <EditText
                   android:gravity="center"
                   android:background="@drawable/border_background"
                   android:layout_rowWeight="1"
                   android:layout_columnWeight="1"
+                  android:inputType="number"
+                  android:layout_gravity="fill"
+                  android:layout_width="0dp"
             />
-        <TextView
+        <EditText
                   android:gravity="center"
                   android:background="@drawable/border_background"
                   android:layout_rowWeight="1"
                   android:layout_columnWeight="1"
+                  android:inputType="number"
+                  android:layout_gravity="fill"
+                  android:layout_width="0dp"
             />
-        <TextView
+        <EditText
                   android:gravity="center"
                   android:background="@drawable/border_background_right"
                   android:layout_rowWeight="1"
                   android:layout_columnWeight="1"
+                  android:inputType="number"
+                  android:layout_gravity="fill"
+                  android:layout_width="0dp"
             />
-        <TextView
+        <EditText
                   android:gravity="center"
                   android:background="@drawable/border_background_left"
                   android:layout_rowWeight="1"
                   android:layout_columnWeight="1"
+                  android:inputType="number"
+                  android:layout_gravity="fill"
+                  android:layout_width="0dp"
             />
-        <TextView
+        <EditText
                   android:gravity="center"
                   android:background="@drawable/border_background"
                   android:layout_rowWeight="1"
                   android:layout_columnWeight="1"
+                  android:inputType="number"
+                  android:layout_gravity="fill"
+                  android:layout_width="0dp"
             />
-        <TextView
+        <EditText
                   android:gravity="center"
                   android:background="@drawable/border_background_right"
                   android:layout_rowWeight="1"
                   android:layout_columnWeight="1"
+                  android:inputType="number"
+                  android:layout_gravity="fill"
+                  android:layout_width="0dp"
             />
-        <TextView
+        <EditText
                   android:gravity="center"
                   android:background="@drawable/border_background_left"
                   android:layout_rowWeight="1"
                   android:layout_columnWeight="1"
+                  android:inputType="number"
+                  android:layout_gravity="fill"
+                  android:layout_width="0dp"
             />
-        <TextView
+        <EditText
                   android:gravity="center"
                   android:background="@drawable/border_background"
                   android:layout_rowWeight="1"
                   android:layout_columnWeight="1"
+                  android:inputType="number"
+                  android:layout_gravity="fill"
+                  android:layout_width="0dp"
             />
-        <TextView
+        <EditText
                   android:gravity="center"
                   android:background="@drawable/border_background"
                   android:layout_rowWeight="1"
                   android:layout_columnWeight="1"
+                  android:inputType="number"
+                  android:layout_gravity="fill"
+                  android:layout_width="0dp"
             />
 
-        <TextView
+        <EditText
                   android:gravity="center"
                   android:background="@drawable/border_background"
                   android:layout_rowWeight="1"
+                  android:inputType="number"
                   android:layout_columnWeight="1"
+                  android:layout_gravity="fill"
+                  android:layout_width="0dp"
             />
-        <TextView
+        <EditText
                   android:gravity="center"
                   android:background="@drawable/border_background"
                   android:layout_rowWeight="1"
+                  android:inputType="number"
                   android:layout_columnWeight="1"
+                  android:layout_gravity="fill"
+                  android:layout_width="0dp"
             />
-        <TextView
+        <EditText
                   android:gravity="center"
                   android:background="@drawable/border_background_right"
                   android:layout_rowWeight="1"
+                  android:inputType="number"
                   android:layout_columnWeight="1"
+                  android:layout_gravity="fill"
+                  android:layout_width="0dp"
             />
-        <TextView
+        <EditText
                   android:gravity="center"
                   android:background="@drawable/border_background_left"
                   android:layout_rowWeight="1"
+                  android:inputType="number"
                   android:layout_columnWeight="1"
+                  android:layout_gravity="fill"
+                  android:layout_width="0dp"
             />
-        <TextView
+        <EditText
                   android:gravity="center"
                   android:background="@drawable/border_background"
                   android:layout_rowWeight="1"
+                  android:inputType="number"
                   android:layout_columnWeight="1"
+                  android:layout_gravity="fill"
+                  android:layout_width="0dp"
             />
-        <TextView
+        <EditText
                   android:gravity="center"
                   android:background="@drawable/border_background_right"
                   android:layout_rowWeight="1"
+                  android:inputType="number"
                   android:layout_columnWeight="1"
+                  android:layout_gravity="fill"
+                  android:layout_width="0dp"
             />
-        <TextView
+        <EditText
                   android:gravity="center"
                   android:background="@drawable/border_background_left"
                   android:layout_rowWeight="1"
+                  android:inputType="number"
                   android:layout_columnWeight="1"
+                  android:layout_gravity="fill"
+                  android:layout_width="0dp"
             />
-        <TextView
+        <EditText
                   android:gravity="center"
                   android:background="@drawable/border_background"
                   android:layout_rowWeight="1"
+                  android:inputType="number"
                   android:layout_columnWeight="1"
+                  android:layout_gravity="fill"
+                  android:layout_width="0dp"
             />
-        <TextView
+        <EditText
                   android:gravity="center"
                   android:background="@drawable/border_background"
                   android:layout_rowWeight="1"
+                  android:inputType="number"
                   android:layout_columnWeight="1"
+                  android:layout_gravity="fill"
+                  android:layout_width="0dp"
             />
 
-        <TextView
+        <EditText
                   android:gravity="center"
                   android:background="@drawable/border_background_bottom"
+                  android:inputType="number"
                   android:layout_rowWeight="1"
                   android:layout_columnWeight="1"
+                  android:layout_gravity="fill"
+                  android:layout_width="0dp"
             />
-        <TextView
+        <EditText
                   android:gravity="center"
                   android:background="@drawable/border_background_bottom"
+                  android:inputType="number"
                   android:layout_rowWeight="1"
                   android:layout_columnWeight="1"
+                  android:layout_gravity="fill"
+                  android:layout_width="0dp"
             />
-        <TextView
+        <EditText
                   android:gravity="center"
                   android:background="@drawable/border_background_bottom_right"
+                  android:inputType="number"
                   android:layout_rowWeight="1"
                   android:layout_columnWeight="1"
+                  android:layout_gravity="fill"
+                  android:layout_width="0dp"
+            />
+        <EditText
+                  android:gravity="center"
+                  android:background="@drawable/border_background_bottom_left"
+                  android:inputType="number"
+                  android:layout_rowWeight="1"
+                  android:layout_columnWeight="1"
+                  android:layout_gravity="fill"
+                  android:layout_width="0dp"
+            />
+        <EditText
+                  android:gravity="center"
+                  android:background="@drawable/border_background_bottom"
+                  android:inputType="number"
+                  android:layout_rowWeight="1"
+                  android:layout_columnWeight="1"
+                  android:layout_gravity="fill"
+                  android:layout_width="0dp"
+            />
+        <EditText
+                  android:gravity="center"
+                  android:background="@drawable/border_background_bottom_right"
+                  android:inputType="number"
+                  android:layout_rowWeight="1"
+                  android:layout_columnWeight="1"
+                  android:layout_gravity="fill"
+                  android:layout_width="0dp"
+            />
+        <EditText
+                  android:gravity="center"
+                  android:background="@drawable/border_background_bottom_left"
+                  android:inputType="number"
+                  android:layout_rowWeight="1"
+                  android:layout_columnWeight="1"
+                  android:layout_gravity="fill"
+                  android:layout_width="0dp"
+            />
+        <EditText
+                  android:gravity="center"
+                  android:background="@drawable/border_background_bottom"
+                  android:inputType="number"
+                  android:layout_rowWeight="1"
+                  android:layout_columnWeight="1"
+                  android:layout_gravity="fill"
+                  android:layout_width="0dp"
+            />
+        <EditText
+                  android:gravity="center"
+                  android:background="@drawable/border_background_bottom"
+                  android:inputType="number"
+                  android:layout_rowWeight="1"
+                  android:layout_columnWeight="1"
+                  android:layout_gravity="fill"
+                  android:layout_width="0dp"
+            />
+        <EditText
+                  android:gravity="center"
+                  android:background="@drawable/border_background_top"
+                  android:inputType="number"
+                  android:layout_rowWeight="1"
+                  android:layout_columnWeight="1"
+                  android:layout_gravity="fill"
+                  android:layout_width="0dp"
+            />
+        <EditText
+                  android:gravity="center"
+                  android:background="@drawable/border_background_top"
+                  android:inputType="number"
+                  android:layout_rowWeight="1"
+                  android:layout_columnWeight="1"
+                  android:layout_gravity="fill"
+                  android:layout_width="0dp"
+            />
+        <EditText
+                  android:gravity="center"
+                  android:background="@drawable/border_background_top_right"
+                  android:inputType="number"
+                  android:layout_rowWeight="1"
+                  android:layout_columnWeight="1"
+                  android:layout_gravity="fill"
+                  android:layout_width="0dp"
+            />
+        <EditText
+                  android:gravity="center"
+                  android:background="@drawable/border_background_top_left"
+                  android:inputType="number"
+                  android:layout_rowWeight="1"
+                  android:layout_columnWeight="1"
+                  android:layout_gravity="fill"
+                  android:layout_width="0dp"
+            />
+        <EditText
+                  android:gravity="center"
+                  android:background="@drawable/border_background_top"
+                  android:inputType="number"
+                  android:layout_rowWeight="1"
+                  android:layout_columnWeight="1"
+                  android:layout_gravity="fill"
+                  android:layout_width="0dp"
+            />
+        <EditText
+                  android:gravity="center"
+                  android:background="@drawable/border_background_top_right"
+                  android:inputType="number"
+                  android:layout_rowWeight="1"
+                  android:layout_columnWeight="1"
+                  android:layout_gravity="fill"
+                  android:layout_width="0dp"
                   android:autoText="false"/>
-        <TextView
+        <EditText
                   android:gravity="center"
-                  android:background="@drawable/border_background_bottom_left"
+                  android:background="@drawable/border_background_top_left"
+                  android:inputType="number"
                   android:layout_rowWeight="1"
                   android:layout_columnWeight="1"
+                  android:layout_gravity="fill"
+                  android:layout_width="0dp"
             />
-        <TextView
+        <EditText
+                  android:gravity="center"
+                  android:background="@drawable/border_background_top"
+                  android:inputType="number"
+                  android:layout_rowWeight="1"
+                  android:layout_columnWeight="1"
+                  android:layout_gravity="fill"
+                  android:layout_width="0dp"
+            />
+        <EditText
+                  android:gravity="center"
+                  android:background="@drawable/border_background_top"
+                  android:inputType="number"
+                  android:layout_rowWeight="1"
+                  android:layout_columnWeight="1"
+                  android:layout_gravity="fill"
+                  android:layout_width="0dp"
+            />
+        <EditText
+                  android:gravity="center"
+                  android:background="@drawable/border_background"
+                  android:inputType="number"
+                  android:layout_rowWeight="1"
+                  android:layout_columnWeight="1"
+                  android:layout_gravity="fill"
+                  android:layout_width="0dp"
+            />
+        <EditText
+                  android:gravity="center"
+                  android:background="@drawable/border_background"
+                  android:inputType="number"
+                  android:layout_rowWeight="1"
+                  android:layout_columnWeight="1"
+                  android:layout_gravity="fill"
+                  android:layout_width="0dp"
+            />
+        <EditText
+                  android:gravity="center"
+                  android:background="@drawable/border_background_right"
+                  android:inputType="number"
+                  android:layout_rowWeight="1"
+                  android:layout_columnWeight="1"
+                  android:layout_gravity="fill"
+                  android:layout_width="0dp"
+            />
+        <EditText
+                  android:gravity="center"
+                  android:background="@drawable/border_background_left"
+                  android:inputType="number"
+                  android:layout_rowWeight="1"
+                  android:layout_columnWeight="1"
+                  android:layout_gravity="fill"
+                  android:layout_width="0dp"
+            />
+        <EditText
+                  android:gravity="center"
+                  android:background="@drawable/border_background"
+                  android:inputType="number"
+                  android:layout_rowWeight="1"
+                  android:layout_columnWeight="1"
+                  android:layout_gravity="fill"
+                  android:layout_width="0dp"
+            />
+        <EditText
+                  android:gravity="center"
+                  android:background="@drawable/border_background_right"
+                  android:inputType="number"
+                  android:layout_rowWeight="1"
+                  android:layout_columnWeight="1"
+                  android:layout_gravity="fill"
+                  android:layout_width="0dp"
+            />
+        <EditText
+                  android:gravity="center"
+                  android:background="@drawable/border_background_left"
+                  android:inputType="number"
+                  android:layout_rowWeight="1"
+                  android:layout_columnWeight="1"
+                  android:layout_gravity="fill"
+                  android:layout_width="0dp"
+            />
+        <EditText
+                  android:gravity="center"
+                  android:background="@drawable/border_background"
+                  android:inputType="number"
+                  android:layout_rowWeight="1"
+                  android:layout_columnWeight="1"
+                  android:layout_gravity="fill"
+                  android:layout_width="0dp"
+            />
+        <EditText
+                  android:gravity="center"
+                  android:background="@drawable/border_background"
+                  android:inputType="number"
+                  android:layout_rowWeight="1"
+                  android:layout_columnWeight="1"
+                  android:layout_gravity="fill"
+                  android:layout_width="0dp"
+            />
+        <EditText
                   android:gravity="center"
                   android:background="@drawable/border_background_bottom"
+                  android:inputType="number"
                   android:layout_rowWeight="1"
                   android:layout_columnWeight="1"
+                  android:layout_gravity="fill"
+                  android:layout_width="0dp"
             />
-        <TextView
+        <EditText
+                  android:gravity="center"
+                  android:background="@drawable/border_background_bottom"
+                  android:inputType="number"
+                  android:layout_rowWeight="1"
+                  android:layout_columnWeight="1"
+                  android:layout_gravity="fill"
+                  android:layout_width="0dp"
+            />
+        <EditText
                   android:gravity="center"
                   android:background="@drawable/border_background_bottom_right"
+                  android:inputType="number"
                   android:layout_rowWeight="1"
                   android:layout_columnWeight="1"
+                  android:layout_gravity="fill"
+                  android:layout_width="0dp"
             />
-        <TextView
+        <EditText
                   android:gravity="center"
                   android:background="@drawable/border_background_bottom_left"
+                  android:inputType="number"
                   android:layout_rowWeight="1"
                   android:layout_columnWeight="1"
+                  android:layout_gravity="fill"
+                  android:layout_width="0dp"
             />
-        <TextView
+        <EditText
                   android:gravity="center"
                   android:background="@drawable/border_background_bottom"
+                  android:inputType="number"
                   android:layout_rowWeight="1"
                   android:layout_columnWeight="1"
+                  android:layout_gravity="fill"
+                  android:layout_width="0dp"
             />
-        <TextView
-                  android:gravity="center"
-                  android:background="@drawable/border_background_bottom"
-                  android:layout_rowWeight="1"
-                  android:layout_columnWeight="1"
-            />
-        <TextView
-                  android:gravity="center"
-                  android:background="@drawable/border_background_top"
-                  android:layout_rowWeight="1"
-                  android:layout_columnWeight="1"
-            />
-        <TextView
-                  android:gravity="center"
-                  android:background="@drawable/border_background_top"
-                  android:layout_rowWeight="1"
-                  android:layout_columnWeight="1"
-            />
-        <TextView
-                  android:gravity="center"
-                  android:background="@drawable/border_background_top_right"
-                  android:layout_rowWeight="1"
-                  android:layout_columnWeight="1"
-            />
-        <TextView
-                  android:gravity="center"
-                  android:background="@drawable/border_background_top_left"
-                  android:layout_rowWeight="1"
-                  android:layout_columnWeight="1"
-            />
-        <TextView
-                  android:gravity="center"
-                  android:background="@drawable/border_background_top"
-                  android:layout_rowWeight="1"
-                  android:layout_columnWeight="1"
-            />
-        <TextView
-                  android:gravity="center"
-                  android:background="@drawable/border_background_top_right"
-                  android:layout_rowWeight="1"
-                  android:layout_columnWeight="1"
-                  android:autoText="false"/>
-        <TextView
-                  android:gravity="center"
-                  android:background="@drawable/border_background_top_left"
-                  android:layout_rowWeight="1"
-                  android:layout_columnWeight="1"
-            />
-        <TextView
-                  android:gravity="center"
-                  android:background="@drawable/border_background_top"
-                  android:layout_rowWeight="1"
-                  android:layout_columnWeight="1"
-            />
-        <TextView
-                  android:gravity="center"
-                  android:background="@drawable/border_background_top"
-                  android:layout_rowWeight="1"
-                  android:layout_columnWeight="1"
-            />
-        <TextView
-                  android:gravity="center"
-                  android:background="@drawable/border_background"
-                  android:layout_rowWeight="1"
-                  android:layout_columnWeight="1"
-            />
-        <TextView
-                  android:gravity="center"
-                  android:background="@drawable/border_background"
-                  android:layout_rowWeight="1"
-                  android:layout_columnWeight="1"
-            />
-        <TextView
-                  android:gravity="center"
-                  android:background="@drawable/border_background_right"
-                  android:layout_rowWeight="1"
-                  android:layout_columnWeight="1"
-            />
-        <TextView
-                  android:gravity="center"
-                  android:background="@drawable/border_background_left"
-                  android:layout_rowWeight="1"
-                  android:layout_columnWeight="1"
-            />
-        <TextView
-                  android:gravity="center"
-                  android:background="@drawable/border_background"
-                  android:layout_rowWeight="1"
-                  android:layout_columnWeight="1"
-            />
-        <TextView
-                  android:gravity="center"
-                  android:background="@drawable/border_background_right"
-                  android:layout_rowWeight="1"
-                  android:layout_columnWeight="1"
-            />
-        <TextView
-                  android:gravity="center"
-                  android:background="@drawable/border_background_left"
-                  android:layout_rowWeight="1"
-                  android:layout_columnWeight="1"
-            />
-        <TextView
-                  android:gravity="center"
-                  android:background="@drawable/border_background"
-                  android:layout_rowWeight="1"
-                  android:layout_columnWeight="1"
-            />
-        <TextView
-                  android:gravity="center"
-                  android:background="@drawable/border_background"
-                  android:layout_rowWeight="1"
-                  android:layout_columnWeight="1"
-            />
-        <TextView
-                  android:gravity="center"
-                  android:background="@drawable/border_background_bottom"
-                  android:layout_rowWeight="1"
-                  android:layout_columnWeight="1"
-            />
-        <TextView
-                  android:gravity="center"
-                  android:background="@drawable/border_background_bottom"
-                  android:layout_rowWeight="1"
-                  android:layout_columnWeight="1"
-            />
-        <TextView
+        <EditText
                   android:gravity="center"
                   android:background="@drawable/border_background_bottom_right"
+                  android:inputType="number"
                   android:layout_rowWeight="1"
                   android:layout_columnWeight="1"
+                  android:layout_gravity="fill"
+                  android:layout_width="0dp"
             />
-        <TextView
+        <EditText
                   android:gravity="center"
                   android:background="@drawable/border_background_bottom_left"
+                  android:inputType="number"
                   android:layout_rowWeight="1"
                   android:layout_columnWeight="1"
+                  android:layout_gravity="fill"
+                  android:layout_width="0dp"
             />
-        <TextView
+        <EditText
                   android:gravity="center"
                   android:background="@drawable/border_background_bottom"
+                  android:inputType="number"
                   android:layout_rowWeight="1"
                   android:layout_columnWeight="1"
+                  android:layout_gravity="fill"
+                  android:layout_width="0dp"
             />
-        <TextView
-                  android:gravity="center"
-                  android:background="@drawable/border_background_bottom_right"
-                  android:layout_rowWeight="1"
-                  android:layout_columnWeight="1"
-            />
-        <TextView
-                  android:gravity="center"
-                  android:background="@drawable/border_background_bottom_left"
-                  android:layout_rowWeight="1"
-                  android:layout_columnWeight="1"
-            />
-        <TextView
+        <EditText
                   android:gravity="center"
                   android:background="@drawable/border_background_bottom"
+                  android:inputType="number"
                   android:layout_rowWeight="1"
                   android:layout_columnWeight="1"
+                  android:layout_gravity="fill"
+                  android:layout_width="0dp"
             />
-        <TextView
-                  android:gravity="center"
-                  android:background="@drawable/border_background_bottom"
-                  android:layout_rowWeight="1"
-                  android:layout_columnWeight="1"
-            />
-        <TextView
+        <EditText
                   android:gravity="center"
                   android:background="@drawable/border_background_top"
+                  android:inputType="number"
                   android:layout_rowWeight="1"
                   android:layout_columnWeight="1"
+                  android:layout_gravity="fill"
+                  android:layout_width="0dp"
             />
-        <TextView
+        <EditText
                   android:gravity="center"
                   android:background="@drawable/border_background_top"
+                  android:inputType="number"
                   android:layout_rowWeight="1"
                   android:layout_columnWeight="1"
+                  android:layout_gravity="fill"
+                  android:layout_width="0dp"
             />
-        <TextView
+        <EditText
                   android:gravity="center"
                   android:background="@drawable/border_background_top_right"
+                  android:inputType="number"
                   android:layout_rowWeight="1"
                   android:layout_columnWeight="1"
+                  android:layout_gravity="fill"
+                  android:layout_width="0dp"
             />
-        <TextView
+        <EditText
                   android:gravity="center"
                   android:background="@drawable/border_background_top_left"
+                  android:inputType="number"
                   android:layout_rowWeight="1"
                   android:layout_columnWeight="1"
+                  android:layout_gravity="fill"
+                  android:layout_width="0dp"
             />
-        <TextView
+        <EditText
                   android:gravity="center"
                   android:background="@drawable/border_background_top"
+                  android:inputType="number"
                   android:layout_rowWeight="1"
                   android:layout_columnWeight="1"
+                  android:layout_gravity="fill"
+                  android:layout_width="0dp"
             />
-        <TextView
+        <EditText
                   android:gravity="center"
                   android:background="@drawable/border_background_top_right"
+                  android:inputType="number"
                   android:layout_rowWeight="1"
                   android:layout_columnWeight="1"
+                  android:layout_gravity="fill"
+                  android:layout_width="0dp"
             />
-        <TextView
+        <EditText
                   android:gravity="center"
                   android:background="@drawable/border_background_top_left"
+                  android:inputType="number"
                   android:layout_rowWeight="1"
                   android:layout_columnWeight="1"
+                  android:layout_gravity="fill"
+                  android:layout_width="0dp"
             />
-        <TextView
+        <EditText
                   android:gravity="center"
                   android:background="@drawable/border_background_top"
+                  android:inputType="number"
                   android:layout_rowWeight="1"
                   android:layout_columnWeight="1"
+                  android:layout_gravity="fill"
+                  android:layout_width="0dp"
             />
-        <TextView
+        <EditText
                   android:gravity="center"
                   android:background="@drawable/border_background_top"
+                  android:inputType="number"
                   android:layout_rowWeight="1"
                   android:layout_columnWeight="1"
+                  android:layout_gravity="fill"
+                  android:layout_width="0dp"
             />
-        <TextView
+        <EditText
+                  android:gravity="center"
+                  android:background="@drawable/border_background"
+                  android:inputType="number"
+                  android:layout_rowWeight="1"
+                  android:layout_columnWeight="1"
+                  android:layout_gravity="fill"
+                  android:layout_width="0dp"
+            />
+        <EditText
+                  android:gravity="center"
+                  android:background="@drawable/border_background"
+                  android:inputType="number"
+                  android:layout_rowWeight="1"
+                  android:layout_columnWeight="1"
+                  android:layout_gravity="fill"
+                  android:layout_width="0dp"
+            />
+        <EditText
+                  android:gravity="center"
+                  android:background="@drawable/border_background_right"
+                  android:inputType="number"
+                  android:layout_rowWeight="1"
+                  android:layout_columnWeight="1"
+                  android:layout_gravity="fill"
+                  android:layout_width="0dp"
+            />
+        <EditText
+                  android:gravity="center"
+                  android:background="@drawable/border_background_left"
+                  android:inputType="number"
+                  android:layout_rowWeight="1"
+                  android:layout_columnWeight="1"
+                  android:layout_gravity="fill"
+                  android:layout_width="0dp"
+            />
+        <EditText
+                  android:gravity="center"
+                  android:background="@drawable/border_background"
+                  android:inputType="number"
+                  android:layout_rowWeight="1"
+                  android:layout_columnWeight="1"
+                  android:layout_gravity="fill"
+                  android:layout_width="0dp"
+            />
+        <EditText
+                  android:gravity="center"
+                  android:background="@drawable/border_background_right"
+                  android:inputType="number"
+                  android:layout_rowWeight="1"
+                  android:layout_columnWeight="1"
+                  android:layout_gravity="fill"
+                  android:layout_width="0dp"
+            />
+        <EditText
+                  android:gravity="center"
+                  android:background="@drawable/border_background_left"
+                  android:inputType="number"
+                  android:layout_rowWeight="1"
+                  android:layout_columnWeight="1"
+                  android:layout_gravity="fill"
+                  android:layout_width="0dp"
+            />
+        <EditText
+                  android:gravity="center"
+                  android:background="@drawable/border_background"
+                  android:inputType="number"
+                  android:layout_rowWeight="1"
+                  android:layout_columnWeight="1"
+                  android:layout_gravity="fill"
+                  android:layout_width="0dp"
+            />
+        <EditText
+                  android:gravity="center"
+                  android:background="@drawable/border_background"
+                  android:inputType="number"
+                  android:layout_rowWeight="1"
+                  android:layout_columnWeight="1"
+                  android:layout_gravity="fill"
+                  android:layout_width="0dp"
+            />
+        <EditText
                   android:gravity="center"
                   android:background="@drawable/border_background"
                   android:layout_rowWeight="1"
                   android:layout_columnWeight="1"
+                  android:layout_gravity="fill"
+                  android:layout_width="0dp"
+                  android:inputType="number"
             />
-        <TextView
+        <EditText
                   android:gravity="center"
                   android:background="@drawable/border_background"
                   android:layout_rowWeight="1"
                   android:layout_columnWeight="1"
+                  android:layout_gravity="fill"
+                  android:layout_width="0dp"
+                  android:inputType="number"
             />
-        <TextView
+        <EditText
                   android:gravity="center"
                   android:background="@drawable/border_background_right"
                   android:layout_rowWeight="1"
                   android:layout_columnWeight="1"
+                  android:layout_gravity="fill"
+                  android:layout_width="0dp"
+                  android:inputType="number"
             />
-        <TextView
+        <EditText
                   android:gravity="center"
                   android:background="@drawable/border_background_left"
                   android:layout_rowWeight="1"
                   android:layout_columnWeight="1"
+                  android:layout_gravity="fill"
+                  android:layout_width="0dp"
+                  android:inputType="number"
             />
-        <TextView
+        <EditText
                   android:gravity="center"
                   android:background="@drawable/border_background"
                   android:layout_rowWeight="1"
                   android:layout_columnWeight="1"
+                  android:layout_gravity="fill"
+                  android:layout_width="0dp"
+                  android:inputType="number"
             />
-        <TextView
+        <EditText
                   android:gravity="center"
                   android:background="@drawable/border_background_right"
                   android:layout_rowWeight="1"
                   android:layout_columnWeight="1"
+                  android:layout_gravity="fill"
+                  android:layout_width="0dp"
+                  android:inputType="number"
             />
-        <TextView
+        <EditText
                   android:gravity="center"
                   android:background="@drawable/border_background_left"
                   android:layout_rowWeight="1"
                   android:layout_columnWeight="1"
+                  android:layout_gravity="fill"
+                  android:layout_width="0dp"
+                  android:inputType="number"
             />
-        <TextView
+        <EditText
                   android:gravity="center"
                   android:background="@drawable/border_background"
                   android:layout_rowWeight="1"
                   android:layout_columnWeight="1"
+                  android:layout_gravity="fill"
+                  android:inputType="number"
+                  android:layout_width="0dp"
             />
-        <TextView
+        <EditText
                   android:gravity="center"
                   android:background="@drawable/border_background"
                   android:layout_rowWeight="1"
                   android:layout_columnWeight="1"
-            />
-        <TextView
-                  android:gravity="center"
-                  android:background="@drawable/border_background"
-                  android:layout_rowWeight="1"
-                  android:layout_columnWeight="1"
-            />
-        <TextView
-                  android:gravity="center"
-                  android:background="@drawable/border_background"
-                  android:layout_rowWeight="1"
-                  android:layout_columnWeight="1"
-            />
-        <TextView
-                  android:gravity="center"
-                  android:background="@drawable/border_background_right"
-                  android:layout_rowWeight="1"
-                  android:layout_columnWeight="1"
-            />
-        <TextView
-                  android:gravity="center"
-                  android:background="@drawable/border_background_left"
-                  android:layout_rowWeight="1"
-                  android:layout_columnWeight="1"
-            />
-        <TextView
-                  android:gravity="center"
-                  android:background="@drawable/border_background"
-                  android:layout_rowWeight="1"
-                  android:layout_columnWeight="1"
-            />
-        <TextView
-                  android:gravity="center"
-                  android:background="@drawable/border_background_right"
-                  android:layout_rowWeight="1"
-                  android:layout_columnWeight="1"
-            />
-        <TextView
-                  android:gravity="center"
-                  android:background="@drawable/border_background_left"
-                  android:layout_rowWeight="1"
-                  android:layout_columnWeight="1"
-            />
-        <TextView
-                  android:gravity="center"
-                  android:background="@drawable/border_background"
-                  android:layout_rowWeight="1"
-                  android:layout_columnWeight="1"
-            />
-        <TextView
-                  android:gravity="center"
-                  android:background="@drawable/border_background"
-                  android:layout_rowWeight="1"
-                  android:layout_columnWeight="1"
+                  android:layout_gravity="fill"
+                  android:inputType="number"
+                  android:layout_width="0dp"
             />
     </GridLayout>
 
@@ -526,5 +769,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="left"
         android:text="Solve!"
-        android:id="@+id/solve_button"/>
+        android:id="@+id/solve_button"
+        android:onClick="solvePuzzle"
+        />
 </LinearLayout>
