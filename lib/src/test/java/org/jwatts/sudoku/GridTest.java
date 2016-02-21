@@ -186,6 +186,54 @@ public class GridTest {
         printPuzzle(underTest);
     }
 
+    @Test
+    public void testToSerializedString() {
+        int[][] puzzleRows = new int[][] {
+                new int[] { 0, 0, 6, 0, 0, 7, 3, 0, 0 },
+                new int[] { 0, 1, 8, 0, 0, 9, 0, 5, 0 },
+                new int[] { 5, 0, 0, 0, 0, 0, 0, 6, 4 },
+                new int[] { 9, 2, 0, 0, 8, 0, 0, 0, 0 },
+                new int[] { 0, 0, 0, 7, 6, 3, 0, 0, 0 },
+                new int[] { 0, 0, 0, 0, 9, 0, 0, 7, 5 },
+                new int[] { 6, 3, 0, 0, 0, 0, 0, 0, 8 },
+                new int[] { 0, 9, 0, 3, 0, 0, 5, 2, 0 },
+                new int[] { 0, 0, 2, 4, 0, 0, 6, 0, 0 },
+        };
+        Grid underTest = Grid.fromIntArrays(puzzleRows);
+        String serializedString = underTest.toSerializedString();
+        assertEquals(
+                "006007300018009050500000064920080000000763000000090075630000008090300520002400600",
+                serializedString);
+    }
+
+    @Test
+    public void testFromSerializedString() {
+        Grid gridFromString = Grid.fromSerializedString(
+                "006007300018009050500000064920080000000763000000090075630000008090300520002400600");
+        Square[][] squares = gridFromString.getSquares();
+        int[][] expectedPuzzleRows = new int[][] {
+                new int[] { 0, 0, 6, 0, 0, 7, 3, 0, 0 },
+                new int[] { 0, 1, 8, 0, 0, 9, 0, 5, 0 },
+                new int[] { 5, 0, 0, 0, 0, 0, 0, 6, 4 },
+                new int[] { 9, 2, 0, 0, 8, 0, 0, 0, 0 },
+                new int[] { 0, 0, 0, 7, 6, 3, 0, 0, 0 },
+                new int[] { 0, 0, 0, 0, 9, 0, 0, 7, 5 },
+                new int[] { 6, 3, 0, 0, 0, 0, 0, 0, 8 },
+                new int[] { 0, 9, 0, 3, 0, 0, 5, 2, 0 },
+                new int[] { 0, 0, 2, 4, 0, 0, 6, 0, 0 },
+        };
+        for (Square[] row : squares) {
+            for (Square s : row) {
+                int expectedValue = expectedPuzzleRows[s.getRowIndex()][s.getColIndex()];
+                assertEquals(String.format(
+                                "Values differ at row %d, col %d; expected %d, got %d",
+                                s.getRowIndex(), s.getColIndex(), expectedValue, s.getValue()),
+                        expectedValue,
+                        s.getValue());
+            }
+        }
+    }
+
     private void printPuzzle(Grid grid) {
         System.out.println("Final solved puzzle: \n" + grid.toString());
     }

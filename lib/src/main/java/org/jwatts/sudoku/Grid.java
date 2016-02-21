@@ -314,4 +314,33 @@ public class Grid {
 
         return sb.toString();
     }
+
+    public String toSerializedString() {
+        StringBuilder sb = new StringBuilder();
+        for (Square[] row : squares) {
+            for (Square s : row) {
+                sb.append(s.getValue());
+            }
+        }
+        return sb.toString();
+    }
+
+    public static Grid fromSerializedString(String serializedGrid) {
+        int rowLength = DEFAULT_BLOCK_SIZE * DEFAULT_BLOCK_SIZE;
+        if (serializedGrid.length() != rowLength * rowLength) {
+            throw new IllegalArgumentException("fromSerializedString only valid for 9x9 grids");
+        }
+
+        int[][] gridValues = new int[rowLength][rowLength];
+        for (int rowIndex = 0; rowIndex < gridValues.length; rowIndex++) {
+            int[] row = gridValues[rowIndex];
+            for (int colIndex = 0; colIndex < row.length; colIndex++) {
+                int strIndex = (rowIndex * rowLength) + colIndex;
+                int squareValue = Character.getNumericValue(serializedGrid.charAt(strIndex));
+                row[colIndex] = squareValue;
+            }
+        }
+
+        return fromIntArrays(gridValues);
+    }
 }
