@@ -64,10 +64,7 @@ public class Grid {
 
             for (int colIndex = 0; colIndex < row.length; colIndex++) {
                 int value = row[colIndex];
-                // Silently ignore invalid values
-                if (value > 0 && value < 10) {
-                    grid.squares[rowIndex][colIndex].setValue(value);
-                }
+                grid.setSquareValueAt(rowIndex, colIndex, value);
             }
         }
         return grid;
@@ -231,21 +228,6 @@ public class Grid {
         }
 
         return blocks[computeBlockNumber(row, col)];
-//        Square[] block = new Square[rowColLength];
-//
-//        int rowBase = (row / blockSize) * blockSize; // drop the remainder
-//        int rowMax = rowBase + blockSize;
-//        int colBase = (col / blockSize) * blockSize; // drop the remainder
-//        int colMax = colBase + blockSize;
-//        int blockIndex = 0;
-//        for (int rowIndex = rowBase; rowIndex < rowMax; rowIndex++) {
-//            for (int colIndex = colBase; colIndex < colMax; colIndex++) {
-//                block[blockIndex] = squares[rowIndex][colIndex];
-//                blockIndex++;
-//            }
-//        }
-//
-//        return block;
     }
 
     private void initBlockView() {
@@ -342,5 +324,16 @@ public class Grid {
         }
 
         return fromIntArrays(gridValues);
+    }
+
+    public void setSquareValueAt(int rowIndex, int colIndex, int value) {
+        // Silently ignore invalid values
+        if (value > 0 && value < 10) {
+            squares[rowIndex][colIndex].setValue(value);
+        }
+    }
+
+    public int getSquareValueAt(int rowIndex, int colIndex) {
+        return squares[rowIndex][colIndex].getValue();
     }
 }

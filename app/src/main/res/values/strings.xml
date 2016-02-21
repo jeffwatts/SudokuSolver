@@ -3,4 +3,7 @@
     <string name="intro_howto">Enter an initial puzzle below to get started</string>
     <string name="action_settings">Settings</string>
     <string name="solve_button">Solve!</string>
+    <string name="toast_solve_error">Oops! Encountered an error</string>
+    <string name="toast_could_not_solve">Couldn\'t solve the puzzle. Maybe gimme a hint?</string>
+    <string name="action_clear">Clear</string>
 </resources>

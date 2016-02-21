@@ -1,4 +1,4 @@
-package org.jwatts.sudokusolver;
+package org.jwatts.sudokusolver.ui;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -18,6 +18,9 @@ import android.widget.Toast;
 import org.jwatts.sudoku.Grid;
 import org.jwatts.sudoku.Square;
 import org.jwatts.sudoku.events.ValueSetObserver;
+import org.jwatts.sudokusolver.LatestGameDataStore;
+import org.jwatts.sudokusolver.R;
+import org.jwatts.sudokusolver.SudokuSolverObservableFactory;
 
 import java.util.WeakHashMap;
 
@@ -35,16 +38,31 @@ public class SolverSetupActivity extends Activity {
     private Button solveButton;
     private GridLayout gridLayout;
     private WeakHashMap<String, TextWatcher> textWatcherMap = new WeakHashMap<>();
-    private final Grid sudokuGrid = new Grid();
+    private Grid sudokuGrid;
+    private LatestGameDataStore gameDataStore;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_solver_setup);
         solveButton = (Button) findViewById(R.id.solve_button);
-        solveButton.setEnabled(false);
-
         gridLayout = (GridLayout) findViewById(R.id.sudoku_grid);
+        gameDataStore = new LatestGameDataStore(this);
+        initGame();
+    }
+
+    private void initGame() {
+        sudokuGrid = gameDataStore.getLatestSerializedGrid();
+        if (sudokuGrid == null) {
+            sudokuGrid = new Grid();
+            solveButton.setEnabled(false);
+        }
+
+        initGridSquareEditors();
+    }
+
+    // TODO set values if the underlying Grid has them
+    private void initGridSquareEditors() {
         // track this separately just in case the child view count differs from the edit text count
         int editTextIndex = 0;
         int childViewCount = gridLayout.getChildCount();
@@ -52,8 +70,16 @@ public class SolverSetupActivity extends Activity {
             View v = gridLayout.getChildAt(i);
             if (v instanceof EditText) {
                 EditText editText = (EditText) v;
-                editText.setFilters(new InputFilter[]{new InputFilter.LengthFilter(1)});
                 final int squareIndex = editTextIndex;
+                final int rowIndex = getRowIndexFromSquareIndex(squareIndex);
+                final int colIndex = getColIndexFromSquareIndex(squareIndex);
+                int currentSquareValue = sudokuGrid.getSquareValueAt(rowIndex, colIndex);
+                if (currentSquareValue > 0) {
+                    editText.setText(String.format("%d", currentSquareValue));
+                } else {
+                    editText.setText("");
+                }
+                editText.setFilters(new InputFilter[]{new InputFilter.LengthFilter(1)});
                 String tag = getTagForSquareIndex(squareIndex);
                 editText.setTag(tag);
                 TextWatcher textWatcher = new TextWatcher() {
@@ -62,15 +88,11 @@ public class SolverSetupActivity extends Activity {
 
                     @Override
                     public void onTextChanged(CharSequence s, int start, int before, int count) {
-                        int rowIndex = getRowIndexFromSquareIndex(squareIndex);
-                        int colIndex = getColIndexFromSquareIndex(squareIndex);
-                        Square[][] squares = sudokuGrid.getSquares();
-                        Square square = squares[rowIndex][colIndex];
                         int squareValue = 0;
                         if (!TextUtils.isEmpty(s)) {
                             squareValue = Integer.parseInt(s.toString());
                         }
-                        square.setValue(squareValue);
+                        sudokuGrid.setSquareValueAt(rowIndex, colIndex, squareValue);
                         solveButton.setEnabled(true);
                     }
 
@@ -85,6 +107,12 @@ public class SolverSetupActivity extends Activity {
     }
 
     @Override
+    public void onPause() {
+        super.onPause();
+        saveGridState();
+    }
+
+    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_solver_setup, menu);
@@ -93,21 +121,33 @@ public class SolverSetupActivity extends Activity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // TODO make this useful
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+        switch (id) {
+            case R.id.action_clear:
+                clearGameState();
+                return true;
+            case R.id.action_settings:
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
         }
+    }
 
-        return super.onOptionsItemSelected(item);
+    private void clearGameState() {
+        gameDataStore.clear();
+        for (String tag : textWatcherMap.keySet()) {
+            removeTextWatcherForTag(tag);
+        }
+        initGame();
     }
 
     public void solvePuzzle(View solveButtonView) {
+        // Save the current grid state, just in case
+        saveGridState();
         Scheduler subscriptionScheduler = Schedulers.newThread();
 
         // Using a lambda inside create() confuses Android Studiohere  -- it loses the generic type
@@ -124,8 +164,7 @@ public class SolverSetupActivity extends Activity {
                 .subscribe(
                         this::onSquareValueSet,
                         (e) -> {
-                            Toast.makeText(this, "Oops! Encountered an error",
-                                    Toast.LENGTH_SHORT).show();
+                            Toast.makeText(this, R.string.toast_solve_error, Toast.LENGTH_SHORT).show();
                             Log.e(TAG, "Error in observing square value changes", e);
                         });
 
@@ -134,12 +173,15 @@ public class SolverSetupActivity extends Activity {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(solved -> {
                     if (!solved) {
-                        Toast.makeText(this, "Couldn't solve the puzzle. Maybe gimme a hint?",
-                                Toast.LENGTH_LONG).show();
+                        Toast.makeText(this, R.string.toast_could_not_solve, Toast.LENGTH_LONG).show();
                     }
                 });
 
         solveButton.setEnabled(false);
+    }
+
+    private void saveGridState() {
+        gameDataStore.saveLatestGridValues(sudokuGrid);
     }
 
     private static int getRowIndexFromSquareIndex(int squareIndex) {
@@ -178,11 +220,16 @@ public class SolverSetupActivity extends Activity {
     public void onSquareValueSet(Square square) {
         int gridSquareIndex = getGridSquareIndexFromRolCol(square.getRowIndex(), square.getColIndex());
         String tag = getTagForSquareIndex(gridSquareIndex);
+        EditText squareEditText = removeTextWatcherForTag(tag);
+        squareEditText.setText(String.format("%d", square.getValue()));
+    }
+
+    private EditText removeTextWatcherForTag(String tag) {
         EditText squareEditText = (EditText) gridLayout.findViewWithTag(tag);
         TextWatcher watcher = textWatcherMap.get(tag);
         if (watcher != null) {
             squareEditText.removeTextChangedListener(watcher);
         }
-        squareEditText.setText(String.format("%d", square.getValue()));
+        return squareEditText;
     }
 }
