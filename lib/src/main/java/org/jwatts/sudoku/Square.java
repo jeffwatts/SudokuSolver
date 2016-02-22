@@ -71,11 +71,11 @@ public class Square {
         sLogger.debug("row {}, col {}; setting value {}", rowIndex, colIndex, value);
         this.value = value;
 
-        for (Square s : allAssociatedSquares) {
+        allAssociatedSquares.forEach(s -> {
             if (!s.hasValue()) {
                 s.setDirty();
             }
-        }
+        });
 
         grid.notifyObservers(this);
 
@@ -117,10 +117,18 @@ public class Square {
         sLogger.debug("Removed values from all associated squares for row {}, col {}. Possible values are {}",
                 rowIndex, colIndex, possibleValues);
 
-        // Technically setting these two should be in a synchronized block
+        // Technically setting these two should be in a synchronized block, but we don't solve across multiple threads
         isDirty = false;
         lastComputedPossibleValues = possibleValues;
         return possibleValues;
+    }
+
+    public void removeFromPossibleValues(int value) {
+        if (hasValue()) {
+            return;
+        }
+
+        getPossibleValues().remove(value);
     }
 
     public int getRowIndex() {

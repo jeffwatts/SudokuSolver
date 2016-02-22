@@ -43,15 +43,15 @@ public class Grid {
     }
 
     /**
-     * Defaults to a block size of 3, uses a {@link ValueSetObserver} that just logs the value and
-     * square coordinates at debug level
+     * Defaults to a block size of 3, uses a {@link ValueSetObserver} that just logs the value and square coordinates at
+     * debug level
      */
     public Grid() {
         this(DEFAULT_BLOCK_SIZE);
     }
 
     public static Grid fromIntArrays(int[][] rows) {
-        if (rows.length != DEFAULT_BLOCK_SIZE*DEFAULT_BLOCK_SIZE) {
+        if (rows.length != DEFAULT_BLOCK_SIZE * DEFAULT_BLOCK_SIZE) {
             throw new IllegalArgumentException("fromIntArrays only valid for 9x9 grids");
         }
 
@@ -104,7 +104,7 @@ public class Grid {
         return squares;
     }
 
-    private int getFilledInSquareCount() {
+    int getFilledInSquareCount() {
         int filledInSquareCount = 0;
         for (int row = 0; row < rowColLength; row++) {
             for (int col = 0; col < rowColLength; col++) {
@@ -138,6 +138,7 @@ public class Grid {
     }
 
     private void fillInValues() {
+        removePointingPairsFromPossibleValues();
         findValuesForGroup(blocks);
         findValuesForGroup(squares);
         findValuesForGroup(columns);
@@ -145,8 +146,8 @@ public class Grid {
     }
 
     /**
-     * Fills in values that are directly implied by the values of their associated squares.
-     * This is the so-called Naked Single technique.
+     * Fills in values that are directly implied by the values of their associated squares. This is the so-called Naked
+     * Single technique.
      */
     private void fillInNakedSingles() {
         for (int row = 0; row < rowColLength; row++) {
@@ -169,16 +170,13 @@ public class Grid {
     }
 
     /**
-     * This method finds so-called Hidden Singles, where values are deduced from the needs of a row,
-     * column, or block based on the possible values that all squares in that collection can take.
+     * This method finds so-called Hidden Singles, where values are deduced from the needs of a row, column, or block
+     * based on the possible values that all squares in that collection can take.
      */
     private void findValuesForSquareCollection(Square[] squareCollection) {
         // We want the values that are not currently set in this block
-        Set<Integer> groupNeededValues = allPossibleValues();
-        NeededValuePredicate neededValuePredicate = new NeededValuePredicate(squareCollection);
-        CollectionUtils.filter(groupNeededValues, neededValuePredicate);
-        outer:
-        for (Integer i : groupNeededValues) {
+        Set<Integer> groupNeededValues = getNeededValuesForSquareCollection(squareCollection);
+        outer: for (Integer i : groupNeededValues) {
             Square candidateSquare = null;
             for (Square s : squareCollection) {
                 if (!s.hasValue() && s.getPossibleValues().contains(i)) {
@@ -197,6 +195,99 @@ public class Grid {
 
             candidateSquare.setValue(i);
         }
+    }
+
+    private Set<Integer> getNeededValuesForSquareCollection(Square[] squareCollection) {
+        Set<Integer> groupNeededValues = allPossibleValues();
+        NeededValuePredicate neededValuePredicate = new NeededValuePredicate(squareCollection);
+        CollectionUtils.filter(groupNeededValues, neededValuePredicate);
+        return groupNeededValues;
+    }
+
+    /**
+     * Uses block-column/row interactions to remove possible values from some squares, based on the so-called Pointing
+     * Pair technique.
+     *
+     * @see <a href="http://www.sadmansoftware.com/sudoku/blockcolumnrow.php">http://www.sadmansoftware.com/sudoku/
+     *      blockcolumnrow.php</a>
+     */
+    private void removePointingPairsFromPossibleValues() {
+        for (int blockIndex = 0; blockIndex < blocks.length; blockIndex++) {
+            Square[] block = blocks[blockIndex];
+            // TODO delete comment below when this is implemented
+            // need a data structure that stores an int value, plus a row or col to take that value out of,
+            // excepting the squares in that row or col in the current block.
+            Set<Integer> blockNeededValues = getNeededValuesForSquareCollection(block);
+            valueLoop: for (Integer value : blockNeededValues) {
+                int inRow = -1;
+                int inCol = -1;
+                MatchType matchType = MatchType.UNKNOWN;
+                for (Square s : block) {
+                    if (s.hasValue()) {
+                        continue;
+                    }
+
+                    Set<Integer> possibleValues = s.getPossibleValues();
+                    if (possibleValues.contains(value)) {
+                        // If we already have a position for this value, either the row or the column must be the same.
+                        // We can only have *one* of the two be the same; if two squares have the same row, and one of
+                        // those two shares a col with a third square with that value, then we need to move on the
+                        // next value.
+                        if (inRow < 0 && inCol < 0) {
+                            // This condition means that this is the first square these have matched on.
+                            // Don't know if we're matching on row or col until our next match
+                            inRow = s.getRowIndex();
+                            inCol = s.getColIndex();
+                            continue;
+                        }
+
+                        if (matchType == MatchType.UNKNOWN) {
+                            if (inRow == s.getRowIndex()) {
+                                matchType = MatchType.ROW;
+                            } else if (inCol == s.getColIndex()) {
+                                matchType = MatchType.COL;
+                            } else {
+                                // We have a second match that does not share a row or col with the previous one.
+                                continue valueLoop;
+                            }
+                            continue;
+                        }
+
+                        if ((matchType == MatchType.ROW && inRow != s.getRowIndex())
+                                        || (matchType == MatchType.COL && inCol != s.getColIndex())) {
+                            continue valueLoop;
+                        }
+                    }
+                }
+                // After iterating over the squares, we should have a ROW or COL MatchType, or we should have
+                // continued to the next needed value.
+                Square[] squareCollection = null;
+                if (matchType == MatchType.ROW) {
+                    // Remove value from the possible values of other squares in this row
+                    squareCollection = squares[inRow];
+                } else if (matchType == MatchType.COL) {
+                    // Remove value from the possible values of other squares in this col
+                    squareCollection = columns[inCol];
+                } else {
+                    // matchType should always be ROW or COL here, but add this continue to protect against NPE below
+                    continue;
+                }
+
+                for (Square s : squareCollection) {
+                    if (s.hasValue() || blockIndex == computeBlockNumber(s.getRowIndex(), s.getColIndex())) {
+                        continue;
+                    }
+
+                    s.removeFromPossibleValues(value);
+                }
+            }
+        }
+    }
+
+    private enum MatchType {
+        ROW,
+        COL,
+        UNKNOWN
     }
 
     public Square[] getRow(int rowIndex) {
@@ -231,8 +322,7 @@ public class Grid {
     }
 
     private void initBlockView() {
-        outer:
-        for (int blockNum = 0; blockNum < rowColLength; blockNum++) {
+        outer: for (int blockNum = 0; blockNum < rowColLength; blockNum++) {
             int currentBlockIndex = 0;
             for (int row = 0; row < rowColLength; row++) {
                 for (int col = 0; col < rowColLength; col++) {
@@ -260,7 +350,7 @@ public class Grid {
         // rows 0-2 get mapped to blocks 0-2
         // rows 3-5 get mapped to blocks 3-5
         // rows 6-8 get mapped to blocks 6-8
-        return ((row/blockSize) * blockSize) + (col/blockSize);
+        return ((row / blockSize) * blockSize) + (col / blockSize);
     }
 
     public Set<Integer> allPossibleValues() {

@@ -8,6 +8,10 @@ buildscript {
 apply plugin: 'com.android.application'
 apply plugin: 'me.tatarka.retrolambda'
 
+ext {
+  archivesBaseName = 'sudoku-solver'
+}
+
 android {
   compileSdkVersion 22
   buildToolsVersion '22.0.1'

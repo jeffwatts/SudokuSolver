@@ -140,7 +140,9 @@ public class GridTest {
 
         // for now just test that this method does not throw
         boolean solved = underTest.solve();
-        assertTrue("Expected puzzle to be solved, instead filled in as \n" + underTest,
+        assertTrue(String.format(
+                        "Expected puzzle to be solved, instead filled count is %d; puzzle state:\n%s",
+                        underTest.getFilledInSquareCount(), underTest),
                 solved);
 
         printPuzzle(underTest);
@@ -162,7 +164,9 @@ public class GridTest {
 
         Grid underTest = Grid.fromIntArrays(initialPuzzleRows);
         boolean solved = underTest.solve();
-        assertTrue("Expected puzzle to be solved, instead filled in as \n" + underTest,
+        assertTrue(String.format(
+                        "Expected puzzle to be solved, instead filled count is %d; puzzle state:\n%s",
+                        underTest.getFilledInSquareCount(), underTest),
                 solved);
 
         printPuzzle(underTest);
