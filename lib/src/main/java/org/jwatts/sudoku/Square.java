@@ -71,11 +71,11 @@ public class Square {
         sLogger.debug("row {}, col {}; setting value {}", rowIndex, colIndex, value);
         this.value = value;
 
-        allAssociatedSquares.forEach(s -> {
+        for (Square s : allAssociatedSquares) {
             if (!s.hasValue()) {
                 s.setDirty();
             }
-        });
+        }
 
         grid.notifyObservers(this);
 

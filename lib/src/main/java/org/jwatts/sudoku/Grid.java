@@ -129,7 +129,7 @@ public class Grid {
             fillInValues();
             filledCount = getFilledInSquareCount();
 
-            if (prevFilledCount == filledCount) {
+            if (filledCount == prevFilledCount) {
                 return false;
             }
         }
@@ -214,9 +214,6 @@ public class Grid {
     private void removePointingPairsFromPossibleValues() {
         for (int blockIndex = 0; blockIndex < blocks.length; blockIndex++) {
             Square[] block = blocks[blockIndex];
-            // TODO delete comment below when this is implemented
-            // need a data structure that stores an int value, plus a row or col to take that value out of,
-            // excepting the squares in that row or col in the current block.
             Set<Integer> blockNeededValues = getNeededValuesForSquareCollection(block);
             valueLoop: for (Integer value : blockNeededValues) {
                 int inRow = -1;
